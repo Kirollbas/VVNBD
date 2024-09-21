@@ -1,4 +1,4 @@
-package testrepo
+package testmongorepo
 
 import (
 	"context"

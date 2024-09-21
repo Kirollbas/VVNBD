@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"vvnbd/internal/db"
 	testhandlers "vvnbd/internal/handlers/test_handlers"
-	testrepo "vvnbd/internal/repositories/test_repo"
+	testinfluxrepo "vvnbd/internal/repositories/test_influx_repo"
+	testmongorepo "vvnbd/internal/repositories/test_mongo_repo"
 	testservice "vvnbd/internal/service/test_service"
 
 	"github.com/labstack/echo"
@@ -18,15 +19,23 @@ func main() {
 
 	e.Use(middleware.Logger())
 
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+	}))
+
 	e.Logger.Warn("hello")
 	mongoClient, err := db.NewMongoClient(ctx)
 	if err != nil {
 		e.Logger.Fatal(fmt.Sprintf("unble to create mong client Err: %s", err))
 	}
 
-	repo := testrepo.NewRepository(ctx, mongoClient)
+	influxClient := db.NewInfluxClient(ctx)
 
-	service := testservice.NewService(ctx, repo)
+	mongoRepo := testmongorepo.NewRepository(ctx, mongoClient)
+
+	influxRepo := testinfluxrepo.NewRepository(ctx, influxClient)
+
+	service := testservice.NewService(ctx, mongoRepo, influxRepo)
 
 	handler := testhandlers.NewHandler(ctx, service)
 

@@ -9,6 +9,7 @@ import (
 func (h *Handler) SetHelloWorld(c echo.Context) error {
 	err := h.service.SetHelloWorld(c.Request().Context())
 	if err != nil {
+		c.Logger().Error(err)
 		return c.NoContent(http.StatusInternalServerError)
 	}
 

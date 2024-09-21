@@ -6,7 +6,7 @@ import (
 )
 
 type service interface {
-	GetHelloWorld(ctx context.Context) (result domain.HelloWorld, isFound bool)
+	GetHelloWorld(ctx context.Context) (result domain.HelloWorld, point string, isFound bool)
 	SetHelloWorld(ctx context.Context) error
 }
 

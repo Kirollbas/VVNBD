@@ -10,14 +10,7 @@ services:
       DOCKER_INFLUXDB_INIT_PASSWORD: test_password
       DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: test_token
       DOCKER_INFLUXDB_INIT_ORG: docs 
-      DOCKER_INFLUXDB_INIT_BUCKET: home
-    volumes:
-      - type: volume
-        source: influxdb2-data
-        target: /var/lib/influxdb2
-      - type: volume
-        source: influxdb2-config
-        target: /etc/influxdb2
+      DOCKER_INFLUXDB_INIT_BUCKET: test_bucket
 
   mongo:  
     image: mongo
@@ -43,6 +36,3 @@ services:
     ports:
       - "8080:8080"
 
-volumes:
-  influxdb2-data:
-  influxdb2-config:
