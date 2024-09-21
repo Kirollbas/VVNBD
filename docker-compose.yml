@@ -36,6 +36,12 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
       ME_CONFIG_BASICAUTH: false
+  
+  backend:
+    build:
+      dockerfile: backend.Dockerfile
+    ports:
+      - "8080:8080"
 
 volumes:
   influxdb2-data:
